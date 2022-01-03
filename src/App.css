@@ -1,38 +1,55 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.container {
   min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main {
+  padding: 5rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+  overflow: hidden;
+}
+.loginSection {
+  margin-top: 20px;
+  height: 70vh;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+.loginSection input {
+  margin-top: 30px;
+  width: 500px;
+  padding: 10px;
+  border: 2px solid transparent;
+  outline: none;
+  border-radius: 10px;
+}
+.loginSection input:focus {
+  border: 2px solid grey;
+}
+.loginSection button {
+  margin-top: 30px;
+  width: 500px;
+  padding: 15px;
+  background-color: rgba(74, 146, 74, 0.4);
+  border: 2px solid rgba(103, 175, 103, 0.4);
+  outline: none;
   color: white;
+  border-radius: 10px;
+  cursor: pointer;
 }
-
-.App-link {
-  color: #61dafb;
+.loginSection button:hover {
+  background-color: rgb(74, 146, 74);
+  border: 2px solid rgb(103, 175, 103);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.warning {
+  color: rgb(211, 63, 63);
 }
