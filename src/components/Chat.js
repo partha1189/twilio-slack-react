@@ -172,7 +172,7 @@ function Chat() {
         },
       });
       const slackResponse = await axios.post(
-        `https://hooks.slack.com/services/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`,
+        process.env.SLACK_HOOK,
         json,
         {
           headers: {
