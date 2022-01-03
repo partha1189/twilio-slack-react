@@ -102,7 +102,7 @@ function Chat() {
   };
 
   const getToken = async (email) => {
-    const response = await axios.get(`http://localhost:4000/token/${email}`);
+    const response = await axios.get(`https://twilio-slack123.herokuapp.com/token/${email}`);
     const { data } = response;
     return data.token;
   };
@@ -119,7 +119,7 @@ function Chat() {
       const arr = txt.split(" ");
       arr.shift();
       console.log(arr);
-      const response = await axios.get(`search?term=${arr.join("+")}`);
+      const response = await axios.get(`https://itunes.apple.com/search?term=${arr.join("+")}`);
       const { data } = response;
       console.log("APPLE DATA:", data.results[0]);
       // setLink(data.results[0].trackViewUrl);
