@@ -68,3 +68,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### STEPS TO SETUP IN LOCAL:
+1) Run the NPM install
+2) Download the Twilio-SDK     "url": "git+https://github.com/TwilioDevEd/sdk-starter-node.git"
+3) start the twilio sdk in local(npm start) localhost:4000 
+4) start the react app(npm start) the application will run on localhost:3000.
+5) Access the application.
