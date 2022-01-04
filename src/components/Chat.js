@@ -153,7 +153,16 @@ function Chat() {
         console.log(arr);
         //const response = await axios.get(`search?term=${arr.join("+")}`);
         const response = await axios.get(
-          `https://itunes.apple.com/search?term=${arr.join("+")}`
+          `https://itunes.apple.com/search?term=${arr.join("+")}`,
+          {
+            headers: {
+               "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Headers":
+                 "Origin, X-Requested-With, Content-Type, Accept",
+               "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
+              // "Content-type": "application/x-www-form-urlencoded",
+            },
+          }
         );
         const { data } = response;
         console.log("APPLE DATA:", data.results[0]);
