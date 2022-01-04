@@ -140,7 +140,7 @@ function Chat() {
     scrollDiv.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (text) {
       console.log(String(text).trim());
       setLoading(true);
