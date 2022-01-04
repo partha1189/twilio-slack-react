@@ -160,7 +160,7 @@ function Chat() {
                "Access-Control-Allow-Headers":
                  "Origin, X-Requested-With, Content-Type, Accept",
               // "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
-              // "Content-type": "application/x-www-form-urlencoded",
+               "Content-type": "application/x-www-form-urlencoded",
             },
           }
         );
