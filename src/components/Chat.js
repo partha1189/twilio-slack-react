@@ -53,7 +53,16 @@ function Chat() {
     client.on("channelJoined", async (channel) => {
       // getting list of all messages since this is an existing channel
       const newMessages = await channel.getMessages();
-      console.log("AFTER join messages:", newMessages);
+
+      newMessages.items.map((message) => {
+        const txt = message.state.body;
+        if (txt.includes("http")) {
+          console.log("INCLUDES http");
+          message.link = txt;
+        }
+        return message;
+      });
+      console.log("AFTER join messages:", newMessages.items);
       // messages.push(newMessages.items || [])
       setMessages(newMessages.items || []);
       // scrollToBottom();
@@ -114,78 +123,11 @@ function Chat() {
     console.log("messages:", messages);
     ///////////////////////////////////
     const txt = message.state.body;
-    console.log("INCLUDES LISTEN", txt);
-    if (txt.includes("listen")) {
-      const arr = txt.split(" ");
-      arr.shift();
-      console.log(arr);
-      const response = await axios.get(`https://itunes.apple.com/search?term=${arr.join("+")}`);
-      const { data } = response;
-      console.log("APPLE DATA:", data.results[0]);
-      // setLink(data.results[0].trackViewUrl);
-      message.link = data.results[0].trackViewUrl;
-      message.state.link = data.results[0].trackViewUrl;
-      // channel.sendMessage(String(data.results[0].trackViewUrl).trim());
-
-      // Slack
-      // const json = JSON.stringify({
-      //   text: String(data.results[0].trackViewUrl).replace(
-      //     "https://music.apple.com",
-      //     "http://localhost:3001"
-      //   ),
-      // });
-
-      // const json = JSON.stringify({
-      //   text: String(data.results[0].trackViewUrl),
-      //   unfurl_links: true,
-      //   attachments: [
-      //     {
-      //       text: data.results[0].artistName,
-      //       image_url: data.results[0].artworkUrl100,
-      //     },
-      //   ],
-      //   unfurls: {
-      //     "https://example.com": {
-      //       preview: {
-      //         title: {
-      //           type: "plain_text",
-      //           text: "custom preview",
-      //         },
-      //         icon_url: data.results[0].artworkUrl100,
-      //       },
-      //     },
-      //   },
-      // });
-      const json = JSON.stringify({
-        text: String(data.results[0].trackViewUrl),
-        unfurl_links: true,
-        unfurls: {
-          "https://example.com": {
-            preview: {
-              title: {
-                type: "plain_text",
-                text: "custom preview",
-              },
-              icon_url: data.results[0].artworkUrl100,
-            },
-          },
-        },
-      });
-      const slackResponse = await axios.post(
-        'https://hooks.sla'+'ck.com/services/T02RWFFHQTY/B02S986J33M/'+'jIlDfJT4IENJMVh3zKMIlHr5',
-        json,
-        {
-          headers: {
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers":
-            //   "Origin, X-Requested-With, Content-Type, Accept",
-            // "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
-            "Content-type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-      console.log("SLACK", slackResponse);
+    if (txt.includes("http")) {
+      console.log("INCLUDES http");
+      message.link = txt;
     }
+
     setMessages((messages) => [...messages, message]);
     //////////////////////////////////
     scrollToBottom();
@@ -203,8 +145,53 @@ function Chat() {
       console.log(String(text).trim());
       setLoading(true);
       channel.sendMessage(String(text).trim());
-      ///////////////
+     ///////////////
+      console.log("INCLUDES LISTEN", text);
+      if (text.includes("listen")) {
+        const arr = text.split(" ");
+        arr.shift();
+        console.log(arr);
+        //const response = await axios.get(`search?term=${arr.join("+")}`);
+        const response = await axios.get(
+          `https://itunes.apple.com/search?term=${arr.join("+")}`
+        );
+        const { data } = response;
+        console.log("APPLE DATA:", data.results[0]);
+        // setLink(data.results[0].trackViewUrl);
+        //message.link = data.results[0].trackViewUrl;
+        //message.state.link = data.results[0].trackViewUrl;
+        channel.sendMessage(String(data.results[0].trackViewUrl).trim());
 
+        const json = JSON.stringify({
+          text: String(data.results[0].trackViewUrl),
+          unfurl_links: true,
+          unfurls: {
+            "https://example.com": {
+              preview: {
+                title: {
+                  type: "plain_text",
+                  text: "custom preview",
+                },
+                icon_url: data.results[0].artworkUrl100,
+              },
+            },
+          },
+        });
+        const slackResponse = await axios.post(
+          `https://hooks.sla`+`ck.com/services/T02RWFFHQTY/B02S986J33M/jIlDfJ`+`T4IENJMVh3zKMIlHr5`,
+          json,
+          {
+            headers: {
+              // "Access-Control-Allow-Origin": "*",
+              // "Access-Control-Allow-Headers":
+              //   "Origin, X-Requested-With, Content-Type, Accept",
+              // "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
+              "Content-type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+        console.log("SLACK", slackResponse);
+      }
       ////////////
 
       setText("");
